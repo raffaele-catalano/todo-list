@@ -4,6 +4,33 @@
     box-sizing: border-box;
 }
 
+body {
+    background: linear-gradient(-45deg, #181F1C, #192BC2, #9E0031, #8E443D);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    font-family: 'Montserrat', sans-serif;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+}
+
 h1 {
     color: crimson;
     text-align: center;
