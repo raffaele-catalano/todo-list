@@ -109,13 +109,16 @@ try {
         completed BOOLEAN NOT NULL,
         task_timestamp DATETIME,
         user_id INTEGER,
-        FOREIGN KEY (user_id) REFERENCES users (id)
+        group_id INTEGER,
+        FOREIGN KEY (user_id) REFERENCES users (id),
+        FOREIGN KEY (group_id) REFERENCES groups (id)
     )");
+    
 
     $taskData = [
-        ['Ordinare una pizza', '2023-10-31 20:00:00', 0, '2023-10-25 11:00:00', 1],
-        ['Comprare un nuovo monitor', '2023-11-27 15:30:00', 0, '2023-10-26 10:00:00', 2],
-        ['Fissare una call con il candidato', '2023-11-26 12:30:00', 0, '2023-10-25 10:00:00', 3],
+        ['Ordinare una pizza', '31-10-2023 20:00', 0, '2023-10-25 11:00:00', 1, null],
+        ['Comprare un nuovo monitor', '27-10-2023 15:30', 0, '2023-10-26 10:00:00', 2, 2],
+        ['Fissare una call con il candidato', '26-10-2023 12:30', 0, '2023-10-25 10:00:00', 3, 2],
         // altri tasks qui
     ];
 
@@ -125,9 +128,10 @@ try {
         $completed = $task[2];
         $taskTimestamp = $task[3];
         $userId = $task[4];
+        $groupId = $task[5];
 
-        $insertTask = $db->prepare("INSERT INTO tasks (title, due_date, completed, task_timestamp, user_id) VALUES (?, ?, ?, ?, ?)");
-        $insertTask->execute([$title, $dueDate, $completed, $taskTimestamp, $userId]);
+        $insertTask = $db->prepare("INSERT INTO tasks (title, due_date, completed, task_timestamp, user_id, group_id) VALUES (?, ?, ?, ?, ?, ?)");
+        $insertTask->execute([$title, $dueDate, $completed, $taskTimestamp, $userId, $groupId]);
     }
     
 } catch (PDOException $error) {

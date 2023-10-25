@@ -31,20 +31,37 @@ main {
     width: 100%;
 }
 
-h1 {
-    color: crimson;
-    text-align: center;
+.logo_container {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.logo_container img {
+    width: 35%;
 }
 
 #btn_modal {
-    box-shadow: 0 0 10px rgba(0, 0, 0, .5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+    transition: all .5s
+}
+
+#btn_modal:hover {
+    box-shadow: 0 0 5px rgba(204, 80, 55, 1);
+    transform: scale(1.1);
 }
 
 table {
     border-radius: 10px;
     overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
 }
 
 th, td {
     text-align: center;
+}
+
+td .form-check {
+    display: flex;
+    justify-content: center;
 }
