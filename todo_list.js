@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Ottieni riferimenti agli elementi del DOM
+    // riferimenti agli elementi del DOM
     const taskForm = document.getElementById('taskForm');
     const taskInput = document.getElementById('taskTitle');
     // const dueDateInput = document.getElementById('dueDate');
@@ -8,23 +8,23 @@ document.addEventListener('DOMContentLoaded', function () {
     const groupSelect = document.getElementById('groupSelect');
     const taskList = document.getElementById('taskList');
 
-    // Mostra/nascondi la selezione del gruppo in base al checkbox
+    // selezione del gruppo in base al checkbox
     shareTaskCheckbox.addEventListener('change', function () {
         groupSelection.style.display = this.checked ? 'block' : 'none';
     });
 
-    // Gestisci la sottomissione del modulo
+    // sottomissione del modulo
     taskForm.addEventListener('submit', function (event) {
         event.preventDefault(); // Impedisci il comportamento predefinito del modulo
 
-        // Recupera i dati del modulo
+        // dati del modulo
         const title = taskInput.value;
         const dueDateInput = document.getElementById('dueDate'); // Otteni l'elemento input
         const dueDate = formatDueDate(dueDateInput.value); // Formatta la data
         const shareTask = shareTaskCheckbox.checked;
         const groupId = shareTask ? groupSelect.value : null;
 
-        // Esegui una richiesta POST per aggiungere un nuovo task al database utilizzando fetch
+        // richiesta POST per aggiungere un nuovo task al database utilizzando fetch
         fetch('add_task.php', {
             method: 'POST',
             headers: {
@@ -32,16 +32,16 @@ document.addEventListener('DOMContentLoaded', function () {
             },
             body: JSON.stringify({
                 title: title,
-                dueDate: dueDate, // Invia la data formattata
+                dueDate: dueDate,
                 groupId: groupId,
             }),
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Se il task è stato aggiunto con successo, aggiorna la visualizzazione
+                // se il task è stato aggiunto con successo, aggiorna la visualizzazione
                 loadTasks();
-                taskForm.reset(); // Resetta il modulo per ripulire i campi
+                taskForm.reset(); // resetta il modulo per ripulire i campi
             } else {
                 alert('Errore durante l\'aggiunta del task: ' + data.message);
             }
@@ -51,13 +51,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Carica le attività iniziali
     loadTasks();
 
-    // Carica i gruppi nel menu a discesa
     loadGroups();
 
-    // Funzione per formattare la data come "YYYY-MM-DD HH:MM:SS"
+    // funzione per formattare la data come "YYYY-MM-DD HH:MM:SS"
     function formatDueDate(isoDate) {
         const date = new Date(isoDate);
         const year = date.getFullYear();
@@ -68,15 +66,15 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${day}-${month}-${year} ${hours}:${minutes}`;
     }
 
-    // Funzione per caricare le attività dalla tua API
+    // funzione per caricare le attività dalla tua API
     function loadTasks() {
         fetch('get_tasks.php')
         .then(response => response.json())
         .then(data => {
-            // Svuota la lista attuale
+            // svuota la lista attuale
             taskList.innerHTML = '';
 
-            // Cicla attraverso le attività e crea righe della tabella
+            // cicla attraverso le attività e crea righe della tabella
             data.forEach((task, index) => {
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
@@ -91,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 `;
                 taskList.appendChild(newRow);
 
-                // Aggiungi un gestore di eventi per il cambiamento della checkbox
+                // gestore di eventi per il cambiamento della checkbox
                 const checkbox = newRow.querySelector(`#checkbox-${task.id}`);
                 checkbox.addEventListener('change', function () {
                     updateTaskStatus(task.id, this.checked);
@@ -103,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Funzione per caricare i gruppi dal database e popolare il menu a discesa
+    // funzione per caricare i gruppi dal database e popolare il menu a discesa
     function loadGroups() {
         fetch('get_groups.php')
         .then(response => response.json())
@@ -120,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Funzione per aggiornare lo stato del task
+    // funzione per aggiornare lo stato del task
     function updateTaskStatus(taskId, completed) {
         fetch('update_task_status.php', {
             method: 'POST',
@@ -135,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Task aggiornato con successo
+                // task aggiornato con successo
             } else {
                 alert('Errore durante l\'aggiornamento dello stato del task: ' + data.message);
             }
