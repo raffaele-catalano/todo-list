@@ -1,4 +1,6 @@
 <?php
+session_start();
+$userId = $_SESSION['user_id'];
 try {
     include 'connection.php';
 
@@ -10,8 +12,8 @@ try {
     $groupId = $data->groupId;
 
     // query SQL per inserire un nuovo task nella tabella "tasks"
-    $insertTask = $db->prepare("INSERT INTO tasks (title, due_date, completed, task_timestamp, group_id) VALUES (?, ?, 0, DATETIME('now'), ?)");
-    $insertTask->execute([$taskTitle, $dueDate, $groupId]);
+    $insertTask = $db->prepare("INSERT INTO tasks (title, due_date, completed, task_timestamp, group_id, user_id) VALUES (?, ?, 0, DATETIME('now'), ?, ?)");
+    $insertTask->execute([$taskTitle, $dueDate, $groupId, $userId]);
 
     // verifica se l'inserimento è riuscito
     $response = array();
