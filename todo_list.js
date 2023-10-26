@@ -7,6 +7,27 @@ document.addEventListener('DOMContentLoaded', function () {
     const groupSelection = document.getElementById('groupSelection');
     const groupSelect = document.getElementById('groupSelect');
     const taskList = document.getElementById('taskList');
+    const taskFilter = document.getElementById('filterTask');
+
+    taskFilter.addEventListener('change', () => {
+        fetch('get_tasks.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                filter: taskFilter.value
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            taskList.innerHTML = '';
+            printTask(data);
+        })
+        .catch(error => {
+            console.error('Errore nel filtro dei dati:', error);
+        });
+    })
 
     // selezione del gruppo in base al checkbox
     shareTaskCheckbox.addEventListener('change', function () {
@@ -66,6 +87,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return `${day}-${month}-${year} ${hours}:${minutes}`;
     }
 
+
+
     // funzione per caricare le attività dalla tua API
     function loadTasks() {
         fetch('get_tasks.php')
@@ -74,32 +97,39 @@ document.addEventListener('DOMContentLoaded', function () {
             // svuota la lista attuale
             taskList.innerHTML = '';
 
-            // cicla attraverso le attività e crea righe della tabella
-            data.forEach((task, index) => {
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                    <th scope="row">${index + 1}</th>
-                    <td>${task.title}</td>
-                    <td>${task.username}</td>
-                    <td>${task.group_name == null ? '' : task.group_name}</td>
-                    <td>${task.due_date}</td>
-                    <td>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="checkbox-${task.id}" ${task.completed ? 'checked' : ''}>
-                        </div>
-                    </td>
-                `;
-                taskList.appendChild(newRow);
-
-                // gestore di eventi per il cambiamento della checkbox
-                const checkbox = newRow.querySelector(`#checkbox-${task.id}`);
-                checkbox.addEventListener('change', function () {
-                    updateTaskStatus(task.id, this.checked);
-                });
-            });
+            printTask(data);
+            
         })
         .catch(error => {
             console.error('Errore nel recupero delle attività:', error);
+        });
+    }
+
+    function printTask(param) {
+
+        console.warn(param);
+        
+        param.forEach((task, index) => {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <th scope="row">${index + 1}</th>
+                <td>${task.title}</td>
+                <td>${task.username}</td>
+                <td>${task.group_name == null ? '' : task.group_name}</td>
+                <td>${task.due_date}</td>
+                <td>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="checkbox-${task.id}" ${task.completed ? 'checked' : ''}>
+                    </div>
+                </td>
+            `;
+            taskList.appendChild(newRow);
+
+            // gestore di eventi per il cambiamento della checkbox
+            const checkbox = newRow.querySelector(`#checkbox-${task.id}`);
+            checkbox.addEventListener('change', function () {
+                updateTaskStatus(task.id, this.checked);
+            });
         });
     }
 
