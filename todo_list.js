@@ -80,6 +80,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 newRow.innerHTML = `
                     <th scope="row">${index + 1}</th>
                     <td>${task.title}</td>
+                    <td>${task.username}</td>
+                    <td>${task.group_name == null ? '' : task.group_name}</td>
                     <td>${task.due_date}</td>
                     <td>
                         <div class="form-check">
