@@ -1,8 +1,7 @@
 <?php
 
 try {
-    $db = new PDO('sqlite:todo_list.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include 'connection.php';
 
     $db->exec("DROP TABLE IF EXISTS users");
     $db->exec("DROP TABLE IF EXISTS users_groups");

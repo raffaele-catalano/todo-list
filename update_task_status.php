@@ -1,7 +1,6 @@
 <?php
 try {
-    $db = new PDO('sqlite:todo_list.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include 'connection.php';
 
     // recupera l'ID del task e il nuovo stato dal corpo della richiesta
     $data = json_decode(file_get_contents("php://input"));

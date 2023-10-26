@@ -4,9 +4,8 @@ $email = $data['email'];
 $password = $data['password'];
 
 try {
-    $db = new PDO('sqlite:todo_list.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+    include 'connection.php';
+    
     // query per cercare l'utente con email e password corrispondenti
     $query = $db->prepare('SELECT * FROM users WHERE email = ? AND password = ?');
     $query->execute([$email, $password]);

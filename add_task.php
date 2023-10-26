@@ -1,7 +1,6 @@
 <?php
 try {
-    $db = new PDO('sqlite:todo_list.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include 'connection.php';
 
     // dati inviati dal client
     $data = json_decode(file_get_contents('php://input'));
@@ -11,8 +10,8 @@ try {
     $groupId = $data->groupId;
 
     // query SQL per inserire un nuovo task nella tabella "tasks"
-    $insertTask = $db->prepare("INSERT INTO tasks (title, due_date, completed, task_timestamp, user_id, group_id) VALUES (?, ?, 0, DATETIME('now'), ?, ?)");
-    $insertTask->execute([$taskTitle, $dueDate, $userId, $groupId]);
+    $insertTask = $db->prepare("INSERT INTO tasks (title, due_date, completed, task_timestamp, group_id) VALUES (?, ?, 0, DATETIME('now'), ?)");
+    $insertTask->execute([$taskTitle, $dueDate, $groupId]);
 
     // verifica se l'inserimento è riuscito
     $response = array();

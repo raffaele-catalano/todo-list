@@ -1,8 +1,7 @@
 <?php
 // connessione al database
 try {
-    $db = new PDO('sqlite:todo_list.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include 'connection.php';
 
     // ottenere tutte le attività dal database
     $query = $db->query('SELECT * FROM tasks');

@@ -1,7 +1,6 @@
 <?php
 try {
-    $db = new PDO('sqlite:todo_list.db');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    include 'connection.php';
 
     // query SQL per ottenere i gruppi dal database
     $getGroups = $db->query("SELECT id, group_name FROM groups");
