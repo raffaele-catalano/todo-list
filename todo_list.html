@@ -21,9 +21,12 @@
 
     <header class="d-flex justify-content-end">
         <div class="signOut-container mt-3 me-5">
-            <button type="button" class="btn fw-bold text-light">
-                SIGN-OUT
-            </button>
+            <form action="sessions.php" method="POST">
+                <input type="checkbox" name="sign-out" checked value="1" hidden>
+                <button type="submit" class="btn fw-bold text-light">
+                    SIGN-OUT
+                </button>
+            </form>
         </div>
     </header>
     
