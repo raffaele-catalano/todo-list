@@ -116,8 +116,14 @@ try {
 
     $taskData = [
         ['Ordinare una pizza', '31-10-2023 20:00', 0, '2023-10-25 11:00:00', 1, null],
+        ['Studiare Python', '27-10-2023 19:00', 0, '2023-09-04 11:00:00', 1, null],
+        ['Acquistare biglietti per Real-Napoli', '14-11-2023 19:00', 0, '2023-10-27 11:00:00', 1, 1],
         ['Comprare un nuovo monitor', '27-10-2023 15:30', 0, '2023-10-26 10:00:00', 2, 2],
+        ['Acquistare Spiderman 2 per PS5', '27-10-2023 15:30', 0, '2023-10-24 10:00:00', 2, null],
         ['Fissare una call con il candidato', '26-10-2023 12:30', 0, '2023-10-25 10:00:00', 3, 2],
+        ['Andare a fare la spesa', '26-10-2023 12:30', 0, '2023-10-25 10:00:00', 3, null],
+        ['Allenamento al Konami Center', '26-10-2023 09:30', 0, '2023-10-25 10:00:00', 4, null],
+        ['Serata di Gala', '30-10-2023 19:30', 0, '2023-10-22 11:00:00', 4, 1],
         // altri tasks qui
     ];
 
